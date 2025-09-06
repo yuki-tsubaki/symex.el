@@ -184,8 +184,10 @@ specific keybinding for `symex-mode-interface'.")
 (defun symex-mode-interface ()
   "The main entry point for editing symbolic expressions using symex mode.
 
-Enter the symex modal interface, activating symex keybindings."
+Enter the symex modal interface, activating symex keybindings.
+Activates `symex-mode' in the buffer if it wasn't already."
   (interactive)
+  (unless symex-mode (symex-mode))
   (symex-editing-mode-enter))
 
 ;;;###autoload
