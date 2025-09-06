@@ -81,6 +81,11 @@ selected symex, in a strict fashion."
   :type 'boolean
   :group 'symex-mode)
 
+(defvar-keymap symex-mode-map
+  :doc "Keymap active whenever `symex-mode' is active, not just
+`symex-editing-mode'. This can be useful for defining a `symex-mode'
+specific keybinding for `symex-mode-interface'.")
+
 (defun symex-mode-highlight-selected (&rest _)
   "Things to do as part of symex selection, e.g. after navigations."
   (when symex-highlight-p
@@ -178,7 +183,6 @@ Enter the symex modal interface, activating symex keybindings."
 (define-minor-mode symex-mode
   "An evil way to edit Lisp symbolic expressions as trees."
   :lighter " symex"
-  :global t
   :group 'symex
   (if symex-mode
       (symex-modal-initialize)
