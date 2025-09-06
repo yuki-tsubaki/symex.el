@@ -196,11 +196,14 @@ Activates `symex-mode' in the buffer if it wasn't already."
   :lighter " symex"
   :group 'symex
   ;; Ensure symex-mode is not disabled in the current mode
-  (if (seq-find #'derived-mode-p symex-disabled-modes)
-      (message "Symex is disabled in `%s'" major-mode)
+  (let ((disabled-mode (seq-find #'derived-mode-p symex-disabled-modes)))
+    (if disabled-mode
+	(message
+	 "Symex is disabled in `%s' because `%s' is in `symex-disabled-modes'"
+	 major-mode disabled-mode)
       (if symex-mode
-	     (symex-modal-initialize)
-	   (symex-modal-disable))))
+	  (symex-modal-initialize)
+	(symex-modal-disable)))))
 
 
 (provide 'symex)
