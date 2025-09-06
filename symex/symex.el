@@ -81,6 +81,15 @@ selected symex, in a strict fashion."
   :type 'boolean
   :group 'symex-mode)
 
+(defcustom symex-disabled-modes
+  '()
+  "A list of major modes that `symex-mode' is disabled in.
+
+`symex-mode' will not activate in any buffer with a mode that is in this
+list or derived from a mode in this list."
+  :type '(repeat symbol)
+  :group 'symex-mode)
+
 (defvar-keymap symex-mode-map
   :doc "Keymap active whenever `symex-mode' is active, not just
 `symex-editing-mode'. This can be useful for defining a `symex-mode'
@@ -184,9 +193,12 @@ Enter the symex modal interface, activating symex keybindings."
   "An evil way to edit Lisp symbolic expressions as trees."
   :lighter " symex"
   :group 'symex
-  (if symex-mode
-      (symex-modal-initialize)
-    (symex-modal-disable)))
+  ;; Ensure symex-mode is not disabled in the current mode
+  (if (seq-find #'derived-mode-p symex-disabled-modes)
+      (message "Symex is disabled in `%s'" major-mode)
+      (if symex-mode
+	     (symex-modal-initialize)
+	   (symex-modal-disable))))
 
 
 (provide 'symex)
