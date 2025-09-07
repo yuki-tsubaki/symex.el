@@ -187,7 +187,7 @@ specific keybinding for `symex-mode-interface'.")
 Enter the symex modal interface, activating symex keybindings.
 Activates `symex-mode' in the buffer if it wasn't already."
   (interactive)
-  (unless symex-mode (symex-mode))
+  (unless (bound-and-true-p symex-mode) (symex-mode))
   (symex-editing-mode-enter))
 
 ;;;###autoload
